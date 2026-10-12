@@ -83,10 +83,29 @@
                 mask: linear-gradient(to bottom, transparent 0, #000 15%, #000 85%, transparent 100%);
       }
     }
+
+    .night-toggle {
+      position: absolute; top: 18px; left: 18px; z-index: 10;
+      color: #234f28; font: 600 12.5px/1 "Inter", sans-serif;
+      background: rgba(255,255,255,.75); border: 1px solid rgba(255,255,255,.85);
+      border-radius: 999px; padding: 9px 14px; cursor: pointer;
+      backdrop-filter: blur(8px); transition: background .15s, transform .15s, color .15s;
+    }
+    .night-toggle:hover { background: #fff; transform: translateY(-1px); }
+    #home.night-mode { background: #060b21; }
+    #home.night-mode #v { filter: brightness(.46) saturate(.72) hue-rotate(12deg); }
+    #home.night-mode::after {
+      content: ""; display: block; position: absolute; inset: 0; z-index: 2; pointer-events: none;
+      background-image: radial-gradient(circle at 12% 20%, #fff 0 1px, transparent 1.8px), radial-gradient(circle at 33% 13%, #d5deff 0 1px, transparent 1.8px), radial-gradient(circle at 71% 24%, #fff 0 1.4px, transparent 2px), radial-gradient(circle at 87% 8%, #b8c8ff 0 1px, transparent 1.8px), radial-gradient(circle at 55% 34%, #fff 0 1px, transparent 1.8px), radial-gradient(circle at 22% 42%, #fff 0 1px, transparent 1.8px), radial-gradient(circle at 92% 38%, #d5deff 0 1px, transparent 1.8px);
+      opacity: .92;
+    }
+    #home.night-mode .hint { color: #eef3ff; background: rgba(13,19,56,.78); border-color: rgba(170,190,255,.4); box-shadow: 0 14px 32px rgba(0,0,0,.42); }
+    #home.night-mode .skip-btn, #home.night-mode .night-toggle { color: #edf2ff; background: rgba(15,22,59,.78); border-color: rgba(170,190,255,.35); }
   </style>
 </head>
 <body>
   <section id="home">
+    <button id="landingNightMode" class="night-toggle" type="button" aria-pressed="false">Dark mode</button>
     <a href="details.html" class="skip-btn" aria-label="Skip to portfolio profile">Enter directly →</a>
     <video id="v" muted playsinline preload="auto" poster="poster.png">
       <source src="home.mp4" type="video/mp4" />
@@ -127,11 +146,27 @@
         raf = requestAnimationFrame(loop);
       }
 
+      var nightToggle = document.getElementById("landingNightMode");
+      var nightKey = "portfolio-night-mode";
+      function setNightMode(on) {
+        home.classList.toggle("night-mode", on);
+        nightToggle.setAttribute("aria-pressed", String(on));
+        nightToggle.textContent = on ? "Light mode" : "Dark mode";
+        try { localStorage.setItem(nightKey, on ? "on" : "off"); } catch (err) {}
+      }
+      var savedNight = null;
+      try { savedNight = localStorage.getItem(nightKey); } catch (err) {}
+      setNightMode(savedNight === "on" || (savedNight === null && window.matchMedia("(prefers-color-scheme: dark)").matches));
+      nightToggle.addEventListener("click", function (event) {
+        event.stopPropagation();
+        setNightMode(!home.classList.contains("night-mode"));
+      });
+
       function go() { if (done) return; done = true; window.location.href = NEXT; }
       v.addEventListener("ended", go);
 
       home.addEventListener("click", function (e) {
-        if (e.target && e.target.classList.contains("skip-btn")) return;
+        if (e.target && e.target.classList && (e.target.classList.contains("skip-btn") || e.target.classList.contains("night-toggle"))) return;
         if (busy) return;
         busy = true;
         if (raf) cancelAnimationFrame(raf);          // freeze the ball where it is
