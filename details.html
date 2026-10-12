@@ -26,14 +26,17 @@
       <span class="cloud c4"></span>
     </div>
 
+    <!-- generative 3D backdrop (gen3d.js) -->
+    <div class="gen3d" id="gen3d" aria-hidden="true"></div>
+
     <div class="site">
 
       <div class="site-top">
         <a href="index.html" class="pdx-back" aria-label="Back to grass">
-          <span class="pdx-back-arrow">←</span> Back to Grass
+          Back to Grass
         </a>
-        <a href="#resume" class="pdx-back" style="margin-left:auto;background:#2fa36b;color:#fff;border:none;" aria-label="Jump to resume">📄 Resume</a>
-        <a href="https://linktr.ee/siddharthk1500" target="_blank" rel="noopener" class="pdx-back" style="background:#7f2aeb;color:#fff;border:none;" aria-label="Linktree">🌿 Linktree</a>
+        <a href="#resume" class="pdx-back" style="margin-left:auto;background:#2fa36b;color:#fff;border:none;" aria-label="Jump to resume">Resume</a>
+        <a href="https://linktr.ee/siddharthk1500" target="_blank" rel="noopener" class="pdx-back" style="background:#7f2aeb;color:#fff;border:none;" aria-label="Linktree">Linktree</a>
       </div>
 
       <!-- left: profile sidebar / trainer card -->
@@ -44,10 +47,9 @@
           <img class="side-avatar" src="avatar.png" alt="Siddharth Kumar"
                onload="var p=document.getElementById('tcgPhoto'); if(p){p.style.display='none';}"
                onerror="this.remove();" />
-          <div class="pdx-photo" id="tcgPhoto"><span>★</span></div>
+          <div class="pdx-photo" id="tcgPhoto"></div>
           <div class="side-stats" aria-hidden="true">
             <span class="side-stat ht"><i>HT</i>5'11"</span>
-            <span class="side-stat wt"><i>WT</i>68 kg</span>
           </div>
         </div>
         <h1 class="side-name">Siddharth Kumar</h1>
@@ -55,10 +57,10 @@
         <p class="side-tagline">Transforming high-intent ideas into viral social media growth &amp; data-driven engagement funnels.</p>
 
         <div class="side-facts">
-          <span><i>📍</i>Noida &amp; Delhi-NCR, India</span>
-          <span><i>✉️</i><a href="mailto:siddharthk1500@gmail.com" style="color:inherit; text-decoration:none;">siddharthk1500@gmail.com</a></span>
-          <span><i>📞</i>+91 6202969798</span>
-          <span><i>🎓</i>B.Tech IT · Gautam Buddha Univ.</span>
+          <span>Noida &amp; Delhi-NCR, India</span>
+          <span><a href="mailto:siddharthk1500@gmail.com" style="color:inherit; text-decoration:none;">siddharthk1500@gmail.com</a></span>
+          <span>+91 6202969798</span>
+          <span>B.Tech IT · Gautam Buddha Univ.</span>
         </div>
 
         <div class="side-block">
@@ -253,7 +255,7 @@
           <div class="arsenal-grid">
             <div class="arsenal-card">
               <div class="arsenal-header">
-                <span class="arsenal-type type-electric">⚡ Electric Type</span>
+                <span class="arsenal-type type-electric">Electric Type</span>
               </div>
               <h3 class="arsenal-title">High-Retention Reel Scripting</h3>
               <p class="arsenal-desc">3-second visual hooks, psychological open loops, fast pacing, and seamless transition architecture designed for algorithm-favored completion rates.</p>
@@ -261,7 +263,7 @@
 
             <div class="arsenal-card">
               <div class="arsenal-header">
-                <span class="arsenal-type type-grass">🌿 Grass Type</span>
+                <span class="arsenal-type type-grass">Grass Type</span>
               </div>
               <h3 class="arsenal-title">Intent-Driven SEO Architecture</h3>
               <p class="arsenal-desc">Topical authority clustering, user search intent matching, on-page optimization, and distribution workflows that secure organic rankings.</p>
@@ -269,7 +271,7 @@
 
             <div class="arsenal-card">
               <div class="arsenal-header">
-                <span class="arsenal-type type-psychic">🔮 Psychic Type</span>
+                <span class="arsenal-type type-psychic">Psychic Type</span>
               </div>
               <h3 class="arsenal-title">Funnel Analytics &amp; A/B Testing</h3>
               <p class="arsenal-desc">SQL queries and Power BI conversion tracking to identify content drop-off points, refining headlines and copy to produce measurable lifts (+25%).</p>
@@ -277,7 +279,7 @@
 
             <div class="arsenal-card">
               <div class="arsenal-header">
-                <span class="arsenal-type type-fire">🔥 Fire Type</span>
+                <span class="arsenal-type type-fire">Fire Type</span>
               </div>
               <h3 class="arsenal-title">Viral Community Growth &amp; PR</h3>
               <p class="arsenal-desc">Grassroots campus campaigns, collaborative media production with 10-person teams, and interactive story polls yielding 4.5M+ impressions.</p>
@@ -295,10 +297,10 @@
 
             <span class="side-label" style="margin-top:12px;">Verified Certifications</span>
             <div class="cert-grid">
-              <span class="cert-badge"><i>🏆</i>McKinsey Forward Program (2025)</span>
-              <span class="cert-badge"><i>🏆</i>GenAI-Powered Data Analysis (Tata Group)</span>
-              <span class="cert-badge"><i>🏆</i>Deloitte Analytics</span>
-              <span class="cert-badge"><i>🏆</i>Office Master Power BI</span>
+              <span class="cert-badge">McKinsey Forward Program (2025)</span>
+              <span class="cert-badge">GenAI-Powered Data Analysis (Tata Group)</span>
+              <span class="cert-badge">Deloitte Analytics</span>
+              <span class="cert-badge">Office Master Power BI</span>
             </div>
           </div>
         </section>
@@ -306,7 +308,7 @@
         <!-- ====== LINKTREE SHOWCASE ====== -->
         <section class="sec" id="linktree">
           <h2 class="sec-title">Find Me Online</h2>
-          <p class="pdx-lead" style="margin-bottom:20px;">All my content, social profiles, and collaborations in one place. Tap the Linktree for the full list ↓</p>
+          <p class="pdx-lead" style="margin-bottom:20px;">All my content, social profiles, and collaborations in one place. Tap the Linktree for the full list</p>
 
           <!-- Featured Linktree Embed Card -->
           <div class="linktree-showcase">
@@ -314,13 +316,12 @@
               <div class="lt-avatar">SK</div>
               <div>
                 <div class="lt-name">Siddharth</div>
-                <div class="lt-bio">Ad Astra ✨</div>
+                <div class="lt-bio">Ad Astra</div>
               </div>
               <a href="https://linktr.ee/siddharthk1500" target="_blank" rel="noopener" class="lt-visit-btn">Visit ↗</a>
             </div>
             <div class="lt-links-grid">
               <a href="https://www.instagram.com/siddharthh__k" target="_blank" rel="noopener" class="lt-link-card lt-insta">
-                <span class="lt-link-icon">📸</span>
                 <div>
                   <div class="lt-link-title">Instagram</div>
                   <div class="lt-link-sub">@siddharthh__k</div>
@@ -328,7 +329,6 @@
                 <span class="lt-arrow">↗</span>
               </a>
               <a href="https://www.linkedin.com/in/siddharthkumar-0938ab245/" target="_blank" rel="noopener" class="lt-link-card lt-linkedin">
-                <span class="lt-link-icon">💼</span>
                 <div>
                   <div class="lt-link-title">LinkedIn</div>
                   <div class="lt-link-sub">Connect professionally</div>
@@ -336,7 +336,6 @@
                 <span class="lt-arrow">↗</span>
               </a>
               <a href="https://medium.com/@siddharthk1500" target="_blank" rel="noopener" class="lt-link-card lt-medium">
-                <span class="lt-link-icon">✍️</span>
                 <div>
                   <div class="lt-link-title">Medium</div>
                   <div class="lt-link-sub">Articles &amp; insights</div>
@@ -344,7 +343,6 @@
                 <span class="lt-arrow">↗</span>
               </a>
               <a href="https://github.com/siddharthhkumar" target="_blank" rel="noopener" class="lt-link-card lt-github">
-                <span class="lt-link-icon">⚡</span>
                 <div>
                   <div class="lt-link-title">GitHub</div>
                   <div class="lt-link-sub">Open-source projects</div>
@@ -352,7 +350,6 @@
                 <span class="lt-arrow">↗</span>
               </a>
               <a href="mailto:siddharthk1500@gmail.com" class="lt-link-card lt-email">
-                <span class="lt-link-icon">✉️</span>
                 <div>
                   <div class="lt-link-title">Email Me</div>
                   <div class="lt-link-sub">siddharthk1500@gmail.com</div>
@@ -360,7 +357,6 @@
                 <span class="lt-arrow">↗</span>
               </a>
               <a href="https://linktr.ee/siddharthk1500" target="_blank" rel="noopener" class="lt-link-card lt-all">
-                <span class="lt-link-icon">🌿</span>
                 <div>
                   <div class="lt-link-title">All Links</div>
                   <div class="lt-link-sub">linktr.ee/siddharthk1500</div>
@@ -376,27 +372,22 @@
           <h2 class="sec-title">Resume</h2>
           <div class="resume-actions">
             <a href="Siddharth_Kumar_C.V_.pdf" download class="resume-dl-btn resume-dl-btn--primary" id="resume-dl">
-              📄 Download PDF Resume
+              Download PDF Resume
             </a>
             <a href="Siddharth_Kumar_C.V_.pdf" target="_blank" rel="noopener" class="resume-dl-btn resume-dl-btn--secondary">
               View Full Resume
             </a>
             <a href="mailto:siddharthk1500@gmail.com?subject=Let's%20Collaborate&body=Hi%20Siddharth%2C%20I%20saw%20your%20portfolio%20and%20would%20love%20to%20connect." class="resume-dl-btn resume-dl-btn--secondary">
-              📩 Email to Collaborate
+              Email to Collaborate
             </a>
             <button class="resume-dl-btn resume-dl-btn--toggle" id="resumeToggle" aria-expanded="false">
-              🔍 Preview Resume
+              Preview Resume
             </button>
           </div>
 
           <!-- 3D Flip + PDF Viewer Combined -->
           <div class="resume-3d-wrap" id="resume3dWrap">
             <!-- Floating skill orbs (ambient decoration) -->
-            <div class="resume-orb orb-1" aria-hidden="true">SEO</div>
-            <div class="resume-orb orb-2" aria-hidden="true">⚡</div>
-            <div class="resume-orb orb-3" aria-hidden="true">4.5M+</div>
-            <div class="resume-orb orb-4" aria-hidden="true">🎯</div>
-            <div class="resume-orb orb-5" aria-hidden="true">Viral</div>
 
             <!-- The 3D card -->
             <div class="resume-scene" id="resumeScene">
@@ -411,7 +402,7 @@
                       <div>
                         <div class="resume-front-name">Siddharth Kumar</div>
                         <div class="resume-front-role">Content Writer · Social Media Executive · Growth Strategist</div>
-                        <div class="resume-front-loc">📍 Noida, Delhi-NCR &nbsp;|&nbsp; ✉️ siddharthk1500@gmail.com</div>
+                        <div class="resume-front-loc">Noida, Delhi-NCR &nbsp;|&nbsp; siddharthk1500@gmail.com</div>
                       </div>
                     </div>
                     <div class="resume-front-stats">
@@ -422,7 +413,7 @@
                     </div>
                     <div class="resume-front-sections">
                       <div class="rf-sec">
-                        <div class="rf-sec-label">🏆 Top Roles</div>
+                        <div class="rf-sec-label">Top Roles</div>
                         <div class="rf-sec-items">
                           <span>BrightRays — Digital Growth Intern</span>
                           <span>Top Talent Bridge — Marketing Analytics Intern</span>
@@ -431,13 +422,13 @@
                         </div>
                       </div>
                       <div class="rf-sec">
-                        <div class="rf-sec-label">⚡ Power Skills</div>
+                        <div class="rf-sec-label">Power Skills</div>
                         <div class="rf-chips">
                           <span>Reel Scripting</span><span>SEO Architecture</span><span>Power BI</span><span>SQL</span><span>Canva</span><span>Community Growth</span>
                         </div>
                       </div>
                       <div class="rf-sec">
-                        <div class="rf-sec-label">🎓 Education &amp; Certs</div>
+                        <div class="rf-sec-label">Education &amp; Certs</div>
                         <div class="rf-sec-items">
                           <span>B.Tech IT · Gautam Buddha University (2022–2026) · LOR Awardee</span>
                           <span>McKinsey Forward Program · Tata GenAI · Deloitte Analytics · Power BI</span>
@@ -445,21 +436,19 @@
                       </div>
                     </div>
                     <button class="resume-flip-hint" id="flipToBack" aria-label="Flip to see PDF">
-                      Flip to view full PDF 🔄
-                    </button>
+                      Flip to view full PDF                     </button>
                   </div>
                 </div>
 
                 <!-- BACK: embedded PDF viewer -->
                 <div class="resume-face resume-back">
                   <div class="resume-back-header">
-                    <span>📄 Siddharth Kumar — Full Resume</span>
+                    <span>Siddharth Kumar — Full Resume</span>
                     <a href="Siddharth_Kumar_C.V_.pdf" download class="resume-back-dl">⬇ Download</a>
                   </div>
                   <iframe class="resume-pdf-embed" src="Siddharth_Kumar_C.V_.pdf" title="Siddharth Kumar Resume PDF" loading="lazy"></iframe>
                   <button class="resume-flip-hint" id="flipToFront" aria-label="Flip back to summary">
-                    ← Back to Summary 🔄
-                  </button>
+                    ← Back to Summary                   </button>
                 </div>
               </div>
             </div>
@@ -475,9 +464,9 @@
                   <h3 class="resume-name">Siddharth Kumar</h3>
                   <p class="resume-headline">Content Writer · Social Media Executive · Growth Strategist</p>
                   <div class="resume-contact-row">
-                    <span>📍 Noida, Delhi-NCR</span>
-                    <span>✉️ siddharthk1500@gmail.com</span>
-                    <span>📞 +91 6202969798</span>
+                    <span>Noida, Delhi-NCR</span>
+                    <span>siddharthk1500@gmail.com</span>
+                    <span>+91 6202969798</span>
                   </div>
                   <div class="resume-contact-row">
                     <a href="https://www.linkedin.com/in/siddharthkumar-0938ab245/" target="_blank">LinkedIn ↗</a>
@@ -690,7 +679,7 @@
                 btn.addEventListener('click', function() {
                   var open = exp.classList.toggle('is-open');
                   btn.setAttribute('aria-expanded', open);
-                  btn.textContent = open ? '✕ Hide Resume' : '🔍 Preview Resume';
+                  btn.textContent = open ? 'Hide Resume' : 'Preview Resume';
                   if (open) exp.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 });
               }
@@ -717,11 +706,12 @@
     <footer class="legal">
       <p>Pokémon © Nintendo, Game&nbsp;Freak &amp; The&nbsp;Pokémon&nbsp;Company. An unofficial fan project.</p>
       <p>© 2026 Siddharth Kumar. Content writing, growth strategy &amp; code created with passion.</p>
-      <p class="legal-sign">Siddharth Kumar · Content Writer &amp; Social Media Executive ⚡</p>
+      <p class="legal-sign">Siddharth Kumar · Content Writer &amp; Social Media Executive </p>
     </footer>
   </main>
 
   <script type="module" src="script.js"></script>
+  <script type="module" src="gen3d.js"></script>
 </body>
 </html>
 

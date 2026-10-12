@@ -557,7 +557,6 @@ html, body {
 .side-hero:hover .side-stat { transform: translateY(0); }
 .side-stat i { font-style: normal; font-size: 10px; opacity: .7; font-weight: 800; letter-spacing: .05em; }
 .side-stat.ht { left: 12px; }
-.side-stat.wt { right: 12px; }
 .pdx-photo {
   position: relative; z-index: 1;
   width: 130px; height: 130px; border-radius: 50%;
@@ -1983,3 +1982,8 @@ img, video { max-width: 100%; }
 }
 
 
+
+/* generative 3D backdrop: sticky like .scene, canvas fills the viewport behind the content */
+.gen3d { position: sticky; top: 0; height: 0; z-index: 0; pointer-events: none; }
+.gen3d canvas { position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; display: block; }
+.metric-card, .arsenal-card, .pub-card, .lt-link-card { transform-style: preserve-3d; will-change: transform; }
