@@ -116,3 +116,46 @@ const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").match
     updateCount();
   });
 })();
+
+// Dark mode: persisted, with a generated star field, shooting stars, a moon and AstroMon.
+(() => {
+  const info = document.getElementById("info");
+  const toggle = document.getElementById("nightMode");
+  const sky = document.getElementById("nightSky");
+  const astroMon = document.getElementById("astromon");
+  const message = document.getElementById("astromonMsg");
+  if (!toggle || !sky || !info) return;
+  const key = "portfolio-night-mode";
+  const setMode = (enabled) => {
+    info.classList.toggle("night-mode", enabled);
+    toggle.setAttribute("aria-pressed", String(enabled));
+    toggle.setAttribute("aria-label", enabled ? "Disable dark mode" : "Enable dark mode");
+    toggle.textContent = enabled ? "Light mode" : "Dark mode";
+    try { localStorage.setItem(key, enabled ? "on" : "off"); } catch {}
+    window.dispatchEvent(new CustomEvent("nightmodechange", { detail: { on: enabled } }));
+  };
+  const saved = (() => { try { return localStorage.getItem(key); } catch { return null; } })();
+  setMode(saved === "on" || (saved === null && window.matchMedia("(prefers-color-scheme: dark)").matches));
+  for (let index = 0; index < 90; index += 1) {
+    const star = document.createElement("span");
+    star.className = "star";
+    star.style.setProperty("--x", `${Math.random() * 100}%`);
+    star.style.setProperty("--y", `${Math.random() * 100}%`);
+    star.style.setProperty("--size", `${1 + Math.random() * 2.6}px`);
+    star.style.setProperty("--delay", `${-Math.random() * 3}s`);
+    sky.appendChild(star);
+  }
+  toggle.addEventListener("click", () => setMode(!info.classList.contains("night-mode")));
+  if (astroMon && message) {
+    const lines = ["AstroMon says: look up!", "A shooting star! Make a wish.", "Gotta catch every constellation.", "Content that glows in the dark."];
+    let i = 0;
+    astroMon.addEventListener("click", () => {
+      i = (i + 1) % lines.length;
+      message.textContent = lines[i];
+      astroMon.classList.remove("is-waving");
+      void astroMon.offsetWidth;
+      astroMon.classList.add("is-waving");
+      astroMon.setAttribute("aria-pressed", "true");
+    });
+  }
+})();

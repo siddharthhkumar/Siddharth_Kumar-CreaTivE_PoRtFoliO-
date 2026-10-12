@@ -1987,3 +1987,55 @@ img, video { max-width: 100%; }
 .gen3d { position: sticky; top: 0; height: 0; z-index: 0; pointer-events: none; }
 .gen3d canvas { position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; display: block; }
 .metric-card, .arsenal-card, .pub-card, .lt-link-card { transform-style: preserve-3d; will-change: transform; }
+
+/* ===================== NIGHT MODE ===================== */
+.night-toggle { cursor: pointer; font-family: inherit; }
+.night-sky { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0; transition: opacity .4s ease; overflow: hidden; }
+.star { position: absolute; left: var(--x); top: var(--y); width: var(--size); height: var(--size); border-radius: 50%; background: #fff; box-shadow: 0 0 8px #9cc7ff; opacity: .78; animation: twinkle 2.8s ease-in-out var(--delay) infinite; }
+@keyframes twinkle { 50% { opacity: .2; transform: scale(.55); } }
+.moon { position: absolute; top: 70px; right: 8%; width: 96px; height: 96px; border-radius: 50%;
+  background: radial-gradient(circle at 34% 30%, #fffdf2 0 8%, #f1ecd2 9% 55%, #cfc9a8 100%);
+  box-shadow: 0 0 60px 14px rgba(230, 236, 255, .35), inset -10px -8px 18px rgba(120, 118, 96, .45); }
+.moon::before, .moon::after { content: ""; position: absolute; border-radius: 50%; background: rgba(160, 156, 126, .35); }
+.moon::before { width: 20px; height: 20px; left: 54px; top: 20px; }
+.moon::after { width: 13px; height: 13px; left: 22px; top: 58px; }
+.shooting { position: absolute; width: 130px; height: 2px; left: 0; top: 0; opacity: 0;
+  background: linear-gradient(90deg, rgba(255,255,255,0), #fff); border-radius: 2px; transform: rotate(-28deg); }
+.shooting.s1 { top: 14%; left: 62%; animation: shoot 7s ease-in 1s infinite; }
+.shooting.s2 { top: 32%; left: 88%; animation: shoot 9s ease-in 4s infinite; }
+.shooting.s3 { top: 8%; left: 36%; animation: shoot 11s ease-in 7s infinite; }
+@keyframes shoot { 0% { opacity: 0; transform: translate(0, 0) rotate(-28deg); } 4% { opacity: 1; } 12% { opacity: 0; transform: translate(-420px, 220px) rotate(-28deg); } 100% { opacity: 0; } }
+
+.astromon { display: none; position: fixed; right: 28px; bottom: 26px; z-index: 4; width: 70px; height: 70px; border: 0; border-radius: 50%; background: transparent; cursor: pointer; filter: drop-shadow(0 10px 16px rgba(4, 10, 34, .55)); }
+.astromon-ring { position: absolute; inset: 24px -8px; border: 4px solid #8c7cff; border-radius: 50%; transform: rotate(-20deg); }
+.astromon-core { position: absolute; inset: 15px; border-radius: 50%; background: radial-gradient(circle at 35% 28%, #fff 0 6%, #9ef0ff 7% 20%, #5a5cff 45%, #26245c 100%); box-shadow: 0 0 22px #7b7cff; }
+.astromon-message { position: absolute; right: 0; bottom: 76px; width: 172px; padding: 9px 11px; border-radius: 12px; background: #17183b; color: #fff; font: 600 11px/1.35 "Inter", sans-serif; opacity: 0; transform: translateY(6px); pointer-events: none; transition: opacity .2s ease, transform .2s ease; }
+.astromon:hover .astromon-message, .astromon:focus-visible .astromon-message, .astromon.is-waving .astromon-message { opacity: 1; transform: translateY(0); }
+.astromon.is-waving .astromon-core { animation: astromonWave .7s ease-in-out 2; }
+@keyframes astromonWave { 50% { transform: translateY(-9px) scale(1.08); } }
+
+#info.night-mode {
+  background: radial-gradient(circle at 75% 5%, #292a69 0, #111637 33%, #070b20 74%, #050713 100%);
+  color: #eaf0ff;
+}
+#info.night-mode .night-sky { opacity: 1; }
+#info.night-mode .scene { opacity: .1; }
+#info.night-mode .astromon { display: block; }
+#info.night-mode .side,
+#info.night-mode .sec { background: rgba(18, 24, 57, .94); color: #edf2ff; border-color: rgba(156, 199, 255, .2); box-shadow: 0 18px 42px rgba(0, 0, 0, .34); }
+#info.night-mode .pdx-back { background: #202758; color: #f4f6ff; }
+#info.night-mode .pdx-back:hover { background: #303976; }
+#info.night-mode .night-toggle { background: #7773ff; color: #fff; }
+#info.night-mode .side-name, #info.night-mode .sec-title, #info.night-mode .xp h4, #info.night-mode .xp-detail h4,
+#info.night-mode .arsenal-title, #info.night-mode .metric-num, #info.night-mode .resume-card { color: #f5f7ff; }
+#info.night-mode .pdx-lead, #info.night-mode .side-tagline, #info.night-mode .side-role, #info.night-mode .xp-date,
+#info.night-mode .xp-detail li, #info.night-mode .side-facts, #info.night-mode .metric-lbl, #info.night-mode .arsenal-desc,
+#info.night-mode .xp-co, #info.night-mode .side-label, #info.night-mode footer { color: #c5cee8; }
+#info.night-mode .metric-card, #info.night-mode .xp-tabs, #info.night-mode .resume-card, #info.night-mode .pub-card,
+#info.night-mode .arsenal-card, #info.night-mode .side-facts span { background: rgba(34, 43, 91, .78); border-color: rgba(156, 199, 255, .18); color: #e6ebff; }
+#info.night-mode .sec-title::after { background: rgba(156, 199, 255, .2); }
+#info.night-mode .xp-co.is-active { color: #7ee2b0; }
+@media (prefers-reduced-motion: reduce) { .star, .shooting, .astromon.is-waving .astromon-core { animation: none; } }
+#info.night-mode .pub-title, #info.night-mode .sec h4[style] { color: #f5f7ff !important; }
+#info.night-mode .pub-journal { color: #9fb3dd; }
+#info.night-mode .pub-desc, #info.night-mode .pub-date { color: #c5cee8; }

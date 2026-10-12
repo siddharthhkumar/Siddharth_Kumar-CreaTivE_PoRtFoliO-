@@ -29,6 +29,17 @@
     <!-- generative 3D backdrop (gen3d.js) -->
     <div class="gen3d" id="gen3d" aria-hidden="true"></div>
 
+    <!-- night sky: stars, shooting stars, moon (shown in night mode) -->
+    <div class="night-sky" id="nightSky" aria-hidden="true">
+      <span class="moon"></span>
+      <span class="shooting s1"></span><span class="shooting s2"></span><span class="shooting s3"></span>
+    </div>
+
+    <button class="astromon" id="astromon" type="button" aria-label="Meet AstroMon" aria-pressed="false">
+      <span class="astromon-ring"></span><span class="astromon-core"></span>
+      <span class="astromon-message" id="astromonMsg">AstroMon says: look up!</span>
+    </button>
+
     <div class="site">
 
       <div class="site-top">
@@ -37,6 +48,7 @@
         </a>
         <a href="#resume" class="pdx-back" style="margin-left:auto;background:#2fa36b;color:#fff;border:none;" aria-label="Jump to resume">Resume</a>
         <a href="https://linktr.ee/siddharthk1500" target="_blank" rel="noopener" class="pdx-back" style="background:#7f2aeb;color:#fff;border:none;" aria-label="Linktree">Linktree</a>
+        <button id="nightMode" class="pdx-back night-toggle" type="button" aria-pressed="false" aria-label="Enable dark mode">Dark mode</button>
       </div>
 
       <!-- left: profile sidebar / trainer card -->
