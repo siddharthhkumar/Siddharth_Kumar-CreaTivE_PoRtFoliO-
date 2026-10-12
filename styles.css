@@ -474,29 +474,6 @@ html, body {
 .pdx-back:hover { background: #f3f5f8; }
 .pdx-back-arrow { font-size: 18px; line-height: 1; }
 
-/* Night mode: CSS-only stars keep the page lightweight and readable. */
-.night-sky { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0; transition: opacity .35s ease; overflow: hidden; }
-.star { position: absolute; left: var(--x); top: var(--y); width: var(--size); height: var(--size); border-radius: 50%; background: #fff; box-shadow: 0 0 8px #9cc7ff; opacity: .78; animation: twinkle 2.8s ease-in-out var(--delay) infinite; }
-.astromon { display: none; position: fixed; right: 28px; bottom: 26px; z-index: 4; width: 70px; height: 70px; border: 0; border-radius: 50%; background: transparent; cursor: pointer; filter: drop-shadow(0 10px 16px rgba(4, 10, 34, .55)); }
-.astromon-ring { position: absolute; inset: 24px -8px; border: 4px solid #8c7cff; border-radius: 50%; transform: rotate(-20deg); }
-.astromon-core { position: absolute; inset: 15px; border-radius: 50%; background: radial-gradient(circle at 35% 28%, #fff 0 6%, #9ef0ff 7% 20%, #5a5cff 45%, #26245c 100%); box-shadow: 0 0 22px #7b7cff; }
-.astromon-message { position: absolute; right: 0; bottom: 76px; width: 172px; padding: 9px 11px; border-radius: 12px; background: #17183b; color: #fff; font: 600 11px/1.35 "Inter", sans-serif; opacity: 0; transform: translateY(6px); pointer-events: none; transition: opacity .2s ease, transform .2s ease; }
-.astromon:hover .astromon-message, .astromon:focus-visible .astromon-message, .astromon.is-waving .astromon-message { opacity: 1; transform: translateY(0); }
-.astromon.is-waving .astromon-core { animation: astromonWave .7s ease-in-out 2; }
-@keyframes twinkle { 50% { opacity: .2; transform: scale(.55); } }
-@keyframes astromonWave { 50% { transform: translateY(-9px) scale(1.08); } }
-.night-mode #info { background: radial-gradient(circle at 75% 5%, #292a69 0, #111637 33%, #070b20 74%, #050713 100%); color: #eaf0ff; }
-.night-mode .night-sky { opacity: 1; }
-.night-mode .scene { opacity: .12; }
-.night-mode .astromon { display: block; }
-.night-mode .pdx-back, .night-mode .side, .night-mode .sec { background-color: rgba(18, 24, 57, .9); color: #edf2ff; border-color: rgba(156, 199, 255, .18); box-shadow: 0 18px 42px rgba(0, 0, 0, .3); }
-.night-mode .pdx-back:hover { background-color: #272d63; }
-.night-mode .side-name, .night-mode .sec-title, .night-mode .xp h4, .night-mode .resume-card { color: #f5f7ff; }
-.night-mode .pdx-lead, .night-mode .side-tagline, .night-mode .xp-date, .night-mode .xp-detail li, .night-mode .side-facts, .night-mode .metric-lbl { color: #c5cee8; }
-.night-mode .metric-card, .night-mode .xp-tabs, .night-mode .resume-card { background: rgba(34, 43, 91, .72); border-color: rgba(156, 199, 255, .15); }
-.night-mode .night-toggle { background: #7773ff; color: #fff; }
-@media (prefers-reduced-motion: reduce) { .star, .astromon.is-waving .astromon-core { animation: none; } }
-
 /* left profile sidebar */
 .side {
   position: sticky; top: 40px;
@@ -1978,36 +1955,31 @@ html, body {
   .resume-front-inner { padding: 20px 18px 16px; }
 }
 
-/* Final theme layer: applied directly to the portfolio container so it always wins. */
-#info.night-mode {
-  background: radial-gradient(circle at 75% 5%, #292a69 0, #111637 33%, #070b20 74%, #050713 100%);
-  color: #eaf0ff;
+/* Responsive performance and layout refinements. */
+img, video { max-width: 100%; }
+.sec { content-visibility: auto; contain-intrinsic-size: 1px 620px; }
+
+@media (min-width: 821px) and (max-width: 1100px) {
+  .site { grid-template-columns: 290px minmax(0, 1fr); gap: 20px; padding: 30px 24px 64px; }
+  .side { padding: 18px; }
 }
-#info.night-mode .night-sky { opacity: 1; }
-#info.night-mode .scene { opacity: .12; }
-#info.night-mode .astromon { display: block; }
-#info.night-mode .side,
-#info.night-mode .sec {
-  background: rgba(18, 24, 57, .94);
-  color: #edf2ff;
-  border-color: rgba(156, 199, 255, .2);
-  box-shadow: 0 18px 42px rgba(0, 0, 0, .34);
+
+@media (max-width: 620px) {
+  .site { padding: 16px 12px 42px; gap: 16px; }
+  .site-top { gap: 8px; flex-wrap: wrap; }
+  .site-top .pdx-back { height: 38px; padding: 0 12px; font-size: 12px; }
+  .site-top .pdx-back[style*="margin-left"] { margin-left: 0 !important; }
+  .side { padding: 18px 16px; border-radius: 18px; }
+  .main { padding: 0 2px 10px; }
+  .sec { padding: 20px 16px; border-radius: 18px; }
+  .sec-title { font-size: 20px; }
+  .pdx-lead { font-size: 15px; line-height: 1.65; }
+  .metric-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .metric-card { padding: 13px 9px; }
+  .xp-co { white-space: nowrap; }
+  .resume-actions { gap: 8px; }
+  .resume-dl-btn { width: 100%; justify-content: center; }
+  .resume-pdf-embed { min-height: 300px; }
 }
-#info.night-mode .pdx-back { background: #202758; color: #f4f6ff; }
-#info.night-mode .pdx-back:hover { background: #303976; }
-#info.night-mode .night-toggle { background: #7773ff; color: #fff; }
-#info.night-mode .side-name,
-#info.night-mode .sec-title,
-#info.night-mode .xp h4,
-#info.night-mode .resume-card { color: #f5f7ff; }
-#info.night-mode .pdx-lead,
-#info.night-mode .side-tagline,
-#info.night-mode .xp-date,
-#info.night-mode .xp-detail li,
-#info.night-mode .side-facts,
-#info.night-mode .metric-lbl { color: #c5cee8; }
-#info.night-mode .metric-card,
-#info.night-mode .xp-tabs,
-#info.night-mode .resume-card { background: rgba(34, 43, 91, .78); border-color: rgba(156, 199, 255, .18); }
 
 

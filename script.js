@@ -1,43 +1,5 @@
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-// Persisted night mode with a generated star field: no image assets or network requests.
-(() => {
-  const root = document.documentElement;
-  const info = document.getElementById("info");
-  const toggle = document.getElementById("nightMode");
-  const sky = document.getElementById("nightSky");
-  const astroMon = document.getElementById("astromon");
-  if (!toggle || !sky || !info) return;
-  const key = "portfolio-night-mode";
-  const setMode = (enabled) => {
-    root.classList.toggle("night-mode", enabled);
-    document.body.classList.toggle("night-mode", enabled);
-    info.classList.toggle("night-mode", enabled);
-    toggle.setAttribute("aria-pressed", String(enabled));
-    toggle.setAttribute("aria-label", enabled ? "Disable night mode" : "Enable night mode");
-    toggle.textContent = enabled ? "Day mode" : "Night mode";
-    try { localStorage.setItem(key, enabled ? "on" : "off"); } catch {}
-  };
-  const saved = (() => { try { return localStorage.getItem(key); } catch { return null; } })();
-  setMode(saved === "on" || (saved === null && window.matchMedia("(prefers-color-scheme: dark)").matches));
-  for (let index = 0; index < 56; index += 1) {
-    const star = document.createElement("span");
-    star.className = "star";
-    star.style.setProperty("--x", `${Math.random() * 100}%`);
-    star.style.setProperty("--y", `${Math.random() * 100}%`);
-    star.style.setProperty("--size", `${1 + Math.random() * 2.6}px`);
-    star.style.setProperty("--delay", `${-Math.random() * 3}s`);
-    sky.appendChild(star);
-  }
-  toggle.onclick = () => setMode(!info.classList.contains("night-mode"));
-  if (astroMon) {
-    astroMon.addEventListener("click", () => {
-      astroMon.classList.toggle("is-waving");
-      astroMon.setAttribute("aria-pressed", String(astroMon.classList.contains("is-waving")));
-    });
-  }
-})();
-
 // Reveal content progressively without hiding anything for visitors who prefer less motion.
 (() => {
   const info = document.getElementById("info");
