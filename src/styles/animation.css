@@ -1,0 +1,184 @@
+/* --- HEADER --- */
+.nav-link {
+  text-decoration: none;
+}
+
+/* nav links: an underline that draws in on hover / focus, and stays on the section that is on screen */
+header nav ul li a {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 0.5rem;
+  transition: transform 0.25s ease;
+}
+header nav ul li a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+header nav ul li a:hover::after,
+header nav ul li a:focus-visible::after,
+header nav ul li a[aria-current="location"]::after {
+  transform: scaleX(1);
+}
+
+/* the wordmark: a quiet opacity dip on hover, nothing more */
+.nav-mark {
+  transition: opacity 0.3s ease, color 0.4s ease;
+}
+
+/* the hover states below all need a real hover and motion allowed */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .nav-mark:hover {
+    opacity: 0.7;
+  }
+
+  header nav ul li a:hover {
+    transform: translateY(-1px);
+  }
+
+  /* case studies: title lifts a little, category steps back, arrows lean forward */
+  .project-item .project-title,
+  .project-item .project-category {
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+  .project-item:hover .project-title {
+    transform: translateY(-3px);
+  }
+  .project-item:hover .project-category {
+    opacity: 0.65;
+  }
+  .project-link:hover[target="_blank"]::after,
+  .button:hover[target="_blank"]::after {
+    transform: translate(3px, -3px);
+  }
+
+  /* selected writing */
+  .writing-card {
+    transition: border-color 0.3s ease;
+  }
+  .writing-card h4 {
+    transition: transform 0.3s ease;
+  }
+  .writing-card:hover {
+    border-color: rgba(var(--ink-rgb), 0.4);
+  }
+  .writing-card:hover h4 {
+    transform: translateY(-2px);
+  }
+
+  /* letter of recommendation: a document that lifts a few pixels */
+  .recognition-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .recognition-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 1rem 2.6rem rgba(var(--ink-rgb), 0.1);
+  }
+}
+
+/* pillars and process steps: a quiet border highlight on hover (background/border, not transform: GSAP
+   animates transform on them during their entrance) */
+.service:hover {
+  border-color: rgba(var(--ink-rgb), 0.35);
+}
+.process-steps li:hover {
+  border-color: var(--accent);
+}
+
+/* --- WORK + CASE STUDIES --- */
+
+/* --- FOOTER --- */
+.footer-follow-circle {
+  transition: all 0.5s ease;
+}
+.footer-follow-circle:hover {
+  backdrop-filter: blur(0);
+}
+
+.footer-follow-circle img {
+  transition: transform 0.2s ease;
+}
+.footer-follow-circle img:hover {
+  transform: scale(1.3);
+}
+
+/* typewriter line */
+.footer-project-text {
+  display: inline-block;
+  border-right: 4px solid var(--white);
+  width: fit-content;
+  white-space: nowrap;
+  animation: blink-cursor 0.7s step-end infinite;
+  min-height: 1.2em;
+}
+
+@keyframes blink-cursor {
+  from,
+  to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: var(--white);
+  }
+}
+
+.footer-contact-text {
+  color: transparent;
+  -webkit-text-stroke: 2px var(--white);
+  cursor: pointer;
+  margin-top: -2%;
+  transition: color 0.4s ease, -webkit-text-stroke 0.4s ease;
+}
+
+.footer-contact-text:hover,
+.footer-contact-text:focus-within {
+  color: var(--white);
+  -webkit-text-stroke: 0px transparent;
+}
+
+.footer-arrow {
+  display: inline-block;
+  transform: rotate(45deg);
+  transition: transform 0.4s ease;
+}
+
+.footer-contact-text:hover .footer-arrow,
+.footer-contact-text:focus-within .footer-arrow {
+  transform: rotate(0deg) translate(10px, -10px);
+}
+
+/* Native scrolling (mobile, tablet, reduced motion): smooth anchor jumps. Never in slides mode,
+   where GSAP animates the scroll itself and a smooth browser scroll would fight it. */
+@media (prefers-reduced-motion: no-preference) {
+  html:not(.slides-mode) {
+    scroll-behavior: smooth;
+  }
+}
+
+/* --- REDUCED MOTION --- */
+/* No marquee, no blinking cursor, no hover/transition motion. JS handles the rest (no slide
+   transitions, no entrance animations, no typewriter): see mode.js and animations.js. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+  }
+
+  .footer-project-text {
+    animation: none;
+    border-right-color: transparent;
+  }
+}

@@ -1,0 +1,1484 @@
+/* Custom fonts */
+@import "./fonts.css";
+
+/* Animations */
+@import "./animation.css";
+
+/* --- 0. VARIABLES --- */
+/* Siddharth's palette: a warm neutral paper base, a deep charcoal ink for type, and one accent
+   (a controlled clay/terracotta, drawn from the gradient's warm end) used sparingly — numerals, links,
+   the active-nav mark, small emphasis. The hero keeps the original gradient photography as a secondary
+   asset; every other slide reads as calm, editorial paper. */
+:root {
+  /* font */
+  --euclid: "Euclid", Arial, sans-serif;
+  --jost: "Jost", Arial, sans-serif;
+
+  /* core palette */
+  --white: #ffffff;
+  --paper: #faf7f2;
+  --paper-deep: #f1ebe1;
+  --ink: #201c18;
+  --ink-rgb: 32, 28, 24;
+  --ink-soft: rgba(32, 28, 24, 0.66);
+  --ink-faint: rgba(32, 28, 24, 0.14);
+  --accent: #ac4222;
+  --accent-soft: rgba(172, 66, 34, 0.1);
+
+  /* gradients (hero + case-study accents; used sparingly, never as full-page washes) */
+  --main-gradient: linear-gradient(88deg, #fa5842 3.7%, #7454c9 79.26%);
+  --project-1-gradient: linear-gradient(90deg, #e7e7db 0%, #f3e2db 52.88%);
+  --project-2-gradient: linear-gradient(90deg, #ad6650 0%, #e5baaa 24.52%);
+  --project-3-gradient: linear-gradient(90deg, #f8c050 30.82%, #c7305b 65.78%, #5a018d 102.99%);
+  --project-4-gradient: linear-gradient(90deg, #c10010 37.91%, #000 49.07%, #240873 101.37%);
+  --project-5-gradient: linear-gradient(90deg, #313042 2.86%, #313040 66.77%, #ff7a1f 97.32%);
+
+  /* RGB of the scrims that keep white hero text readable on the gradient */
+  --scrim: 26, 6, 40;
+}
+
+/* --- 1. CONFIGURATION GÉNÉRALE --- */
+
+/* rem base */
+html {
+  /* 62.5% of 16px = 10px */
+  font-size: 62.5%;
+}
+
+/* Desktop (>= 1100px): the layout is a 16:10 "stage" designed at 1440x900, where 1rem = 10px.
+   Scaling the root size with the smaller of width / height scales the whole stage: it is
+   identical at 1440x900 and still fits any other desktop window. Mobile and tablet keep 10px
+   and use fluid clamp() values instead (see the media queries at the end of this file). */
+@media (min-width: 1100px) {
+  html {
+    font-size: clamp(6px, min(calc(100vw / 144), calc(100vh / 90)), 16px);
+    font-size: clamp(6px, min(calc(100vw / 144), calc(100svh / 90)), 16px);
+  }
+}
+
+body {
+  font-family: var(--euclid);
+  font-size: 1.6rem;
+  color: var(--ink);
+  background: var(--paper);
+}
+
+/* White text on the hero's and footer's orange / purple gradient photography measures about 2.4-2.8:1
+   against the lightest areas (WCAG AA wants 4.5:1 for small text). A soft shadow keeps it legible without
+   changing the look; What I Do and How I Work sit on plain paper now, so they need none of this. */
+.hero,
+.footer {
+  text-shadow: 0 0.1rem 1.2rem rgba(40, 10, 50, 0.4);
+}
+
+/* Slides mode (class set by navigation.js): the page is moved by GSAP only, never by the user.
+   Everywhere else the page scrolls natively, and keeps its scrollbar. */
+.slides-mode,
+.slides-mode body {
+  overflow: hidden;
+}
+
+/* --- Links, focus --- */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:focus-visible,
+summary:focus-visible {
+  outline: 2px solid var(--focus-color, currentColor);
+  outline-offset: 0.6rem;
+  border-radius: 0.4rem;
+}
+
+p {
+  font-size: 2rem;
+  line-height: 140%;
+}
+
+/* Headings (h1-h4) carry no style of their own: the reset makes them inherit. Sizes come from the
+   classes of each slide. The oversized words below are decorative, never headings by themselves. */
+
+/* visually hidden, still read by screen readers and search engines */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* first tab stop: jumps over the header links */
+.skip-link {
+  position: absolute;
+  top: 1.2rem;
+  left: 1.2rem;
+  z-index: 200;
+  padding: 1rem 1.6rem;
+  font-size: 1.6rem;
+  font-weight: 500;
+  color: var(--ink);
+  background: var(--white);
+  border-radius: 0.8rem;
+  transform: translateY(-200%);
+}
+.skip-link:focus {
+  transform: none;
+}
+
+main:focus {
+  outline: none;
+}
+
+/* The hero animates in: until the motion script takes over it stays hidden (see index.html). Header links stay visible. */
+.motion-pending .intro-wrapper {
+  opacity: 0;
+}
+
+/* --- 2. HEADER --- */
+/* A minimal, restrained header: a small wordmark on the left, four quiet links on the right.
+   No oversized logo, no elaborate hover flair — it stays out of the way of the content. */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: fit-content;
+  z-index: 100;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 3rem 4rem;
+}
+
+header nav ul {
+  display: flex;
+  gap: 3.6rem;
+  color: var(--white);
+  font-weight: 500;
+}
+
+.nav-link {
+  cursor: pointer;
+  font-size: 1.6rem;
+  letter-spacing: 0.01em;
+}
+
+/* the restrained "SK" wordmark */
+.nav-mark {
+  font-size: 2rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--white);
+}
+
+/* header color change */
+header nav ul,
+.nav-mark {
+  transition: color 0.4s ease;
+}
+
+header.header-dark nav ul,
+header.header-dark .nav-mark {
+  color: var(--ink);
+}
+
+/* focus ring colour follows the header colour */
+header {
+  --focus-color: var(--white);
+}
+header.header-dark {
+  --focus-color: var(--ink);
+}
+
+/* --- 3. SLIDE --- */
+.slide {
+  width: 100%;
+  height: 100vh;
+  /* small viewport height: stays put when a mobile browser's address bar shows or hides */
+  height: 100svh;
+  position: relative;
+  /* the big project titles may bleed past the viewport edge; never let that add a horizontal scrollbar */
+  overflow-x: clip;
+
+  /* centre the content */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* --- 4. INTRO --- */
+.intro-box {
+  padding: 0.8rem 0.8rem 0 0.8rem;
+}
+
+.intro-wrapper {
+  width: 100%;
+  /* temporary background */
+  /* background: linear-gradient(to bottom, #ff9a9e 0%, #fad0c4 50%, #fbc2eb 100%); */
+  /* Optimized WebP versions of the original gradient (degrade-hd.png, 22 MB, kept in the repo).
+     "cover" from the top-left, exactly as before, so the composition is unchanged. 1x / 2x by screen density. */
+  background-image: image-set(url("/src/assets/images/gradient-intro-desktop-1600.webp") 1x, url("/src/assets/images/gradient-intro-desktop-2136.webp") 2x);
+  background-size: cover;
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  border-radius: 4rem;
+}
+
+.intro-wrapper .slide {
+  background-color: transparent;
+  max-height: calc(100vh - 0.6rem);
+  max-height: calc(100svh - 0.6rem);
+}
+
+/* hero slide: content sits left, generously spaced, over a muted strip of the gradient photography */
+section.hero {
+  /* #hero should scroll to the very top (its box starts 0.8rem lower, at the intro box's top gap) */
+  scroll-margin-top: 0.8rem;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: clamp(4rem, 9vw, 11rem);
+  padding-right: clamp(3rem, 6vw, 8rem);
+  color: var(--white);
+}
+
+/* a soft, deepening scrim behind the hero's type: the gradient photography stays visible around it,
+   as a supporting asset rather than the main event */
+.hero {
+  isolation: isolate;
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(100deg, rgba(var(--scrim), 0.5) 0%, rgba(var(--scrim), 0.3) 58%, rgba(var(--scrim), 0) 88%);
+}
+
+.hero-content {
+  width: min(62rem, 100%);
+}
+
+.hero-eyebrow {
+  margin-bottom: 1.6rem;
+  font-size: 1.4rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.hero-name-line {
+  display: block;
+  font-size: clamp(4.4rem, 6vw, 6.4rem);
+  font-weight: 600;
+  line-height: 112%;
+}
+.hero-role-line {
+  display: block;
+  margin-top: 0.8rem;
+  font-size: clamp(1.9rem, 2.4vw, 2.4rem);
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.hero-statement {
+  margin-top: 2.4rem;
+  width: min(46rem, 100%);
+}
+.hero-statement p {
+  font-size: 1.9rem;
+  font-weight: 300;
+  line-height: 150%;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+  margin-top: 2.8rem;
+}
+
+.hero-keywords {
+  margin-top: 2.8rem;
+  padding-top: 2rem;
+  font-size: 1.3rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.86);
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* pill buttons: outlined by default, solid accent for the primary one */
+.button {
+  display: inline-flex;
+  align-items: center;
+  padding: 1.3rem 2.6rem;
+  font-size: 1.6rem;
+  font-weight: 500;
+  line-height: 1.2;
+  border: 2px solid currentColor;
+  border-radius: 500px;
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+.button:hover {
+  background-color: rgba(255, 255, 255, 0.16);
+}
+.button-solid {
+  color: var(--white);
+  background-color: var(--accent);
+  border-color: var(--accent);
+  text-shadow: none;
+}
+.button-solid:hover {
+  background-color: #963a1e;
+  border-color: #963a1e;
+}
+.button-dark {
+  color: var(--ink);
+  border-color: var(--ink-faint);
+}
+.button-dark:hover {
+  color: var(--white);
+  background-color: var(--ink);
+  border-color: var(--ink);
+}
+/* buttons and links that leave the page carry an arrow */
+.button[target="_blank"]::after,
+.project-link[target="_blank"]::after {
+  content: "\2197";
+  display: inline-block;
+  margin-left: 0.6rem;
+  transition: transform 0.3s ease;
+}
+
+
+/* ===================================================================
+   CONTENT SLIDES. Flow layout first (phones, tablets, no JS); the desktop
+   "stage" layout is layered on top from 1100px (see the end of this block).
+   =================================================================== */
+
+/* honest stand-in for content that has not been supplied yet */
+.placeholder-frame {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: 300;
+  color: rgba(var(--ink-rgb), 0.75);
+  background: rgba(var(--ink-rgb), 0.04);
+  border: 2px dashed rgba(var(--ink-rgb), 0.35);
+}
+
+/* the "capabilities" lists (pillars, case studies) */
+.capabilities {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  list-style: none;
+  font-size: 1.6rem;
+  font-weight: 500;
+  line-height: 130%;
+}
+.capabilities li::before {
+  content: "— ";
+}
+
+/* ----- What I Do / How I Work: calm, editorial paper. The gradient stays confined to the hero;
+   these two read as clean, professional surfaces so the content — not the background — carries the page. ----- */
+.services,
+.process {
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  padding: clamp(9rem, 13vw, 13rem) clamp(1.6rem, 4vw, 4rem) clamp(3rem, 5vw, 4rem);
+  gap: 3.6rem;
+  color: var(--ink);
+}
+/* opaque paper, painted over the shared gradient behind them (.intro-wrapper .slide is transparent by
+   default, at higher specificity, so this needs the wrapper in the selector to actually win) */
+.intro-wrapper .services,
+.intro-wrapper .process {
+  background-color: var(--paper);
+}
+.services-title,
+.process-title {
+  text-align: left;
+  font-size: clamp(3rem, 4.4vw, 4rem);
+  font-weight: 600;
+  line-height: 115%;
+}
+
+/* three numbered pillars */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr));
+  gap: 2rem;
+}
+.service {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  padding: clamp(2.4rem, 3vw, 3.2rem);
+  background-color: var(--white);
+  border: 1px solid var(--ink-faint);
+  border-radius: 2rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.service-number {
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+}
+.service h3 {
+  font-size: 2.4rem;
+  font-weight: 600;
+  line-height: 120%;
+}
+.service-lead {
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: var(--ink-soft);
+  line-height: 145%;
+}
+.service .capabilities {
+  margin-top: 0.4rem;
+  color: var(--ink-soft);
+}
+
+/* ----- How I work: five steps, read as a horizontal workflow on desktop (see the 1100px block below) ----- */
+.process-steps {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  gap: 1.6rem;
+  list-style: none;
+}
+.process-steps li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 2rem 0 0;
+  border-top: 3px solid var(--ink-faint);
+  transition: border-color 0.3s ease;
+}
+.process-number {
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+}
+.process-name {
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1.2;
+  text-transform: capitalize;
+}
+.process-text {
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--ink-soft);
+  line-height: 145%;
+}
+.process-ai {
+  margin-top: auto;
+  max-width: 100rem;
+  padding: 2rem 2.4rem;
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: var(--ink-soft);
+  background-color: var(--paper-deep);
+  border-radius: 1.6rem;
+}
+.process-ai strong {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+/* ----- white slides ----- */
+.writing,
+.about,
+.clubs,
+.recognition {
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  gap: clamp(3rem, 6vw, 8rem);
+  padding: clamp(11rem, 16vw, 13rem) clamp(2rem, 6vw, 6rem) clamp(5rem, 8vw, 6rem);
+  color: var(--ink);
+}
+
+/* selected writing */
+.writing-intro {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.writing-intro h3 {
+  font-size: clamp(3rem, 4.6vw, 4rem);
+  font-weight: 600;
+  line-height: 115%;
+}
+.writing-intro p {
+  font-size: clamp(1.6rem, 2vw, 1.9rem);
+  font-weight: 400;
+  color: var(--ink-soft);
+}
+.writing-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+  list-style: none;
+}
+.writing-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 2.4rem;
+  border: 1px solid var(--ink-faint);
+  border-radius: 1.6rem;
+  transition: border-color 0.3s ease;
+}
+/* the featured Medium piece reads as the primary card */
+.writing-card-featured {
+  padding: clamp(2.8rem, 3.4vw, 3.6rem);
+  background: var(--paper);
+  border-color: var(--ink-faint);
+  border-left: 3px solid var(--accent);
+}
+.writing-card-featured h4 {
+  font-size: 2.6rem;
+}
+.writing-card h4 {
+  font-size: 2.1rem;
+  font-weight: 600;
+  line-height: 125%;
+}
+.writing-card p {
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: var(--ink-soft);
+}
+.writing-card .writing-card-label {
+  font-size: 1.3rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.writing-card.placeholder-frame {
+  min-height: 9rem;
+}
+
+/* about */
+.about-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  max-width: 70rem;
+}
+.about-heading {
+  font-size: 1.4rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.about-statement {
+  font-size: clamp(2.6rem, 4.4vw, 3.4rem);
+  font-weight: 500;
+  line-height: 130%;
+}
+.about-copy {
+  font-size: clamp(1.6rem, 2.4vw, 2rem);
+  font-weight: 300;
+  line-height: 150%;
+}
+.about-facts {
+  display: flex;
+  flex-direction: column;
+  max-width: 60rem;
+}
+.about-facts > div {
+  padding: 1.6rem 0;
+  border-top: 2px solid rgba(var(--ink-rgb), 0.15);
+}
+.about-facts dt {
+  margin-bottom: 0.4rem;
+  font-size: 1.4rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.about-facts dd {
+  font-size: 1.8rem;
+  font-weight: 300;
+  line-height: 140%;
+}
+
+/* clubs & leadership */
+.clubs-intro {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+/* Leadership & Campus: visually quieter than the professional work above it — smaller type, plainer cards */
+.clubs-intro h3 {
+  font-size: clamp(2.4rem, 3.2vw, 3rem);
+  font-weight: 600;
+  line-height: 120%;
+}
+.clubs-intro p {
+  max-width: 56rem;
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--ink-soft);
+}
+.clubs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr));
+  gap: 1.6rem;
+}
+.club {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 2rem;
+  border: 1px solid var(--ink-faint);
+  border-radius: 1.2rem;
+}
+.club h4 {
+  font-size: 1.7rem;
+  font-weight: 600;
+  line-height: 125%;
+}
+.club-role {
+  font-size: 1.4rem;
+  color: var(--ink-soft);
+}
+.club-role span:first-child {
+  font-weight: 500;
+  color: var(--ink);
+}
+.club-points {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  list-style: none;
+  font-size: 1.4rem;
+  font-weight: 400;
+  color: var(--ink-soft);
+  line-height: 135%;
+}
+.club-points li::before {
+  content: "— ";
+}
+.club-logo {
+  width: 8rem;
+  height: 8rem;
+  margin-bottom: 0.8rem;
+  border-radius: 1rem;
+  object-fit: cover;
+}
+
+/* letter of recommendation: a quiet, premium credential card (not a disabled button) */
+.recognition-body {
+  display: flex;
+  flex-direction: column;
+  max-width: 48rem;
+}
+.recognition-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4.4rem;
+  height: 4.4rem;
+  margin-bottom: 1.6rem;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border-radius: 1rem;
+}
+.recognition-icon svg {
+  width: 2.2rem;
+  height: 2.2rem;
+}
+.recognition-card h3 {
+  font-size: clamp(2.4rem, 3.4vw, 3rem);
+  font-weight: 600;
+  line-height: 120%;
+}
+.recognition-status {
+  margin-top: 1rem;
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: var(--ink-soft);
+}
+
+.recognition-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(3rem, 5vw, 4.4rem);
+  overflow: hidden;
+  background: var(--white);
+  border: 1px solid var(--ink-faint);
+  border-radius: 1.6rem;
+  box-shadow: 0 0.4rem 1.6rem rgba(var(--ink-rgb), 0.05);
+}
+/* folded corner: a quiet document cue */
+.recognition-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 4.4rem;
+  height: 4.4rem;
+  background: linear-gradient(225deg, var(--white) 50%, var(--paper-deep) 50%);
+  border-bottom-left-radius: 1rem;
+}
+
+/* Desktop stage (>= 1100px): the same content laid out on the 16:10 stage. Every slide is exactly one
+   screen high here, so each block below is sized to fit it. */
+@media (min-width: 1100px) {
+  .services-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .process-steps {
+    grid-template-columns: repeat(5, 1fr);
+  }
+  .services,
+  .process {
+    padding: 13rem 4rem 4rem;
+  }
+
+  .writing,
+  .about {
+    flex-direction: row;
+    align-items: center;
+    padding: 13rem 6rem 6rem;
+  }
+  .writing-intro {
+    flex: none;
+    width: 44rem;
+  }
+  .writing-cards {
+    flex: 1;
+    max-width: 72rem;
+  }
+  .about-text {
+    flex: none;
+    width: 62rem;
+  }
+  .about-facts {
+    flex: none;
+    width: 48rem;
+  }
+
+  .clubs {
+    justify-content: flex-start;
+    padding: 12rem 6rem 5rem;
+    gap: 3rem;
+  }
+  .clubs-intro {
+    flex-direction: row;
+    align-items: baseline;
+    gap: 4rem;
+  }
+  .clubs-grid {
+    flex: 1;
+    min-height: 0;
+    grid-template-columns: 1.25fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+  }
+  .club-featured {
+    grid-row: 1 / span 2;
+  }
+  .club-featured .club-logo {
+    width: 11rem;
+    height: 11rem;
+  }
+}
+
+/* --- 5. WORK + CASE STUDIES --- */
+/* The "work" title slide and the case studies (data-project="work" / "project-1" ...). The default
+   layout is a flow (phones, tablets, no JS, native scrolling); "slides mode" (desktop with a mouse) adds
+   the 16:10 stage on top: oversized word behind the image, caption bottom left, story in a panel. */
+.projects-wrapper {
+  background-color: var(--white);
+  position: relative;
+  z-index: 30;
+}
+
+/* decorative case-study numeral: a quiet marker, never in competition with the real heading below it */
+.project-number {
+  margin: 0;
+  font-weight: 600;
+  font-size: 1.8rem;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+}
+
+/* "work" title slide: one plain, confident heading */
+.work-title {
+  margin: 0;
+  font-size: clamp(3.6rem, 5.6vw, 5.2rem);
+  font-weight: 600;
+  line-height: 112%;
+  text-align: center;
+}
+.work-note {
+  max-width: min(52rem, 100%);
+  margin-top: 1.6rem;
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: 400;
+  color: var(--ink-soft);
+}
+
+/* flow layout (default) */
+.project-item {
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(2rem, 4vw, 4rem);
+  height: auto;
+  min-height: 100vh;
+  min-height: 100svh;
+  padding: clamp(9rem, 13vw, 14rem) clamp(1.6rem, 4vw, 4rem) clamp(4rem, 7vw, 7rem);
+  color: var(--ink);
+}
+
+/* Image (or text card) is one square frame; the picture is cropped to it (object-fit / object-position),
+   so any image, whatever its ratio, gets the same frame. GSAP animates transform on it: nothing else may. */
+.project-media {
+  position: relative;
+  width: min(56vw, 52rem, 44vh);
+  width: min(56vw, 52rem, 44svh);
+  /* the img width/height attributes only reserve the ratio: the frame is always this square */
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 8%;
+}
+img.project-media {
+  box-shadow: 0.7rem 6rem 6.2rem -2.8rem var(--project-shadow);
+}
+
+/* text card used when the case study has no picture: a line of the actual work */
+.quote-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(1rem, 2vw, 2rem);
+  padding: clamp(1.8rem, 5vw, 4rem);
+  margin: 0;
+  color: var(--white);
+  background: var(--ink);
+}
+.quote-card-label {
+  font-size: 1.4rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+.quote-card blockquote p {
+  font-size: clamp(1.7rem, 4.4vw, 2.8rem);
+  font-weight: 500;
+  line-height: 130%;
+}
+
+/* caption: number, company, category, h3 title, summary, key metric, links, story toggle — a premium case-study card */
+.project-meta {
+  width: min(100%, 52rem);
+  color: var(--ink);
+}
+.project-info {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+.project-category {
+  margin-top: 0.3rem;
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.project-title {
+  font-size: clamp(2.4rem, 2.8vw, 3rem);
+  font-weight: 600;
+  line-height: 120%;
+}
+.project-summary {
+  margin-top: 1rem;
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: var(--ink-soft);
+}
+/* the headline number: only when it can be evidenced, always with its context */
+.project-key-metric {
+  margin-top: 1.4rem;
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--ink-soft);
+}
+.project-key-metric strong {
+  display: block;
+  font-size: 3.6rem;
+  font-weight: 600;
+  line-height: 110%;
+  color: var(--ink);
+}
+.project-live {
+  margin-top: 1.4rem;
+}
+.project-link {
+  display: inline-block;
+  padding-bottom: 0.2rem;
+  font-size: 1.6rem;
+  font-weight: 500;
+  border-bottom: 2px solid var(--ink-faint);
+  transition: border-color 0.25s ease;
+}
+
+/* the full case study: a native disclosure, so it works without JS and with the keyboard */
+.project-details {
+  margin-top: 1.6rem;
+}
+.project-details summary {
+  display: inline-block;
+  padding-bottom: 0.2rem;
+  font-size: 1.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  list-style: none;
+  border-bottom: 2px solid currentColor;
+}
+.project-details summary::-webkit-details-marker {
+  display: none;
+}
+.project-details summary::after {
+  content: " +";
+  content: " +" / "";
+}
+.project-details[open] summary::after {
+  content: " \2212";
+  content: " \2212" / "";
+}
+.project-details-body {
+  margin-top: 1.6rem;
+  padding: 2rem;
+  background: var(--white);
+  border: 1px solid var(--ink-faint);
+  border-radius: 1.6rem;
+}
+.project-details-body h4 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.case-part + .case-part {
+  margin-top: 2.4rem;
+}
+.slides-mode .case-part + .case-part {
+  margin-top: 0;
+}
+.project-details-body h5 {
+  margin-top: 1.6rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  break-after: avoid;
+}
+.project-details-body p {
+  margin-top: 0.4rem;
+  font-size: 1.6rem;
+  font-weight: 300;
+  line-height: 150%;
+}
+.project-details-body .capabilities {
+  margin-top: 0.6rem;
+  font-size: 1.5rem;
+}
+.project-details-body .takeaway {
+  font-weight: 500;
+}
+.case-figure {
+  margin: 1.6rem 0;
+  break-inside: avoid;
+}
+.case-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid rgba(var(--ink-rgb), 0.12);
+  border-radius: 1.6rem;
+}
+.case-figure figcaption {
+  margin-top: 0.8rem;
+  font-size: 1.4rem;
+  font-weight: 300;
+}
+.article-outline {
+  margin-top: 0.6rem;
+  padding-left: 2rem;
+  font-size: 1.5rem;
+  font-weight: 300;
+  line-height: 145%;
+}
+.concepts {
+  display: grid;
+  gap: 1.2rem;
+  margin-top: 1rem;
+}
+.concept {
+  margin: 0;
+  padding-left: 1.6rem;
+  border-left: 3px solid rgba(var(--ink-rgb), 0.25);
+  break-inside: avoid;
+}
+.concept figcaption {
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+.concept blockquote p {
+  margin-top: 0.4rem;
+  font-size: 1.5rem;
+  font-weight: 300;
+}
+.project-metrics {
+  display: grid;
+  gap: 1.2rem;
+  margin-top: 1rem;
+}
+.project-metrics > div {
+  display: flex;
+  flex-direction: column;
+}
+.project-metrics dd {
+  font-size: 4rem;
+  font-weight: 600;
+  line-height: 110%;
+}
+.project-metrics dt {
+  order: 2;
+  font-size: 1.4rem;
+  font-weight: 300;
+}
+.project-details-body .metric-note {
+  font-size: 1.4rem;
+  font-style: italic;
+}
+
+/* the picture's shadow keeps a faint trace of each case study's original accent colour */
+.project-item[data-project="project-1"] {
+  --project-shadow: rgba(204, 133, 96, 0.2);
+}
+.project-item[data-project="project-2"] {
+  --project-shadow: rgba(255, 149, 10, 0.22);
+}
+.project-item[data-project="project-3"] {
+  --project-shadow: rgba(6, 0, 41, 0.22);
+}
+
+/* ----- slides mode: the stage. A premium two-up case study — large image, confident caption column,
+   nothing competing with the title — rather than an oversized word behind a small floating card. ----- */
+.slides-mode .project-item {
+  height: 100vh;
+  height: 100svh;
+  min-height: 0;
+  padding: 0 clamp(4rem, 7vw, 9rem);
+  gap: clamp(4rem, 6vw, 9rem);
+}
+.slides-mode .project-item:not(.work) {
+  flex-direction: row;
+  justify-content: center;
+}
+.slides-mode .project-item.work {
+  gap: 1.6rem;
+}
+.slides-mode .work-title {
+  font-size: clamp(4.4rem, 6vw, 6.4rem);
+}
+
+/* Large imagery: a tall, generous frame — the case study's real visual, not a decorative backdrop. */
+.slides-mode .project-item > .project-media {
+  position: relative;
+  width: min(38vw, 46rem);
+  aspect-ratio: 4 / 5;
+  flex: none;
+}
+.slides-mode .project-item > img.project-media {
+  box-shadow: 0.6rem 4rem 5rem -2.4rem var(--project-shadow);
+}
+
+.slides-mode .project-meta {
+  width: min(40rem, 34vw);
+  flex: none;
+}
+.slides-mode .project-number {
+  font-size: 2rem;
+}
+
+/* opened: the story fills the rest of the stage */
+.slides-mode .project-details[open] .project-details-body {
+  position: fixed;
+  z-index: 60;
+  top: 11rem;
+  right: 4rem;
+  bottom: 4rem;
+  left: 44%;
+  margin: 0;
+  padding: 4rem 5rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto minmax(min-content, 1fr) auto auto;
+  grid-template-areas:
+    "challenge work"
+    "approach work"
+    "result result"
+    "takeaway takeaway";
+  column-gap: 6rem;
+  row-gap: 2.4rem;
+  background: rgba(255, 255, 255, 0.98);
+  border-radius: 3rem;
+}
+.slides-mode .case-challenge {
+  grid-area: challenge;
+}
+.slides-mode .case-approach {
+  grid-area: approach;
+}
+.slides-mode .case-work {
+  grid-area: work;
+}
+.slides-mode .case-result {
+  grid-area: result;
+}
+.slides-mode .case-takeaway {
+  grid-area: takeaway;
+}
+.slides-mode .case-result .project-metrics {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+/* --- 6. FOOTER --- */
+.footer {
+  --focus-color: var(--white);
+  width: 100%;
+  height: 100vh;
+  height: 100svh;
+  display: flex;
+  align-items: flex-end;
+  padding: 0.8rem;
+}
+
+.footer-text-block > div:first-child {
+  padding: 5rem 15rem 0 15rem;
+}
+
+.footer-text-block {
+  position: relative;
+  isolation: isolate;
+}
+.footer-text-block::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(to bottom, rgba(var(--scrim), 0.24), rgba(var(--scrim), 0.34));
+}
+
+/* the contact line is a real link, a size down from the typed line so the whole phrase fits */
+.footer .footer-contact-text {
+  font-size: 4.8rem;
+}
+
+.social-glyph {
+  font-size: 2.2rem;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--white);
+}
+
+.footer .footer-heading {
+  margin-bottom: 1.4rem;
+  color: var(--white);
+  font-size: 1.4rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  line-height: 140%;
+}
+
+/* Available for: a quiet, scannable list of what Siddharth takes on */
+.footer-available {
+  margin-top: 3.2rem;
+  padding-top: 2.4rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.24);
+}
+/* ".footer p" (a class + type selector) outranks a single class, so this needs the extra specificity */
+.footer .footer-available-label {
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.62);
+}
+.footer-available ul {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+}
+.footer-available li {
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.88);
+}
+.footer-available li:not(:last-child)::after {
+  content: "·";
+  margin: 0 1rem;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.footer-text-block {
+  width: 100%;
+  height: 80%;
+  border-radius: 4rem;
+  /* Optimized WebP versions of degrade-hd-footer.png (10 MB, kept in the repo): same "cover" composition. */
+  background-image: image-set(url("/src/assets/images/gradient-footer-desktop-1600.webp") 1x, url("/src/assets/images/gradient-footer-desktop-2848.webp") 2x);
+  background-size: cover;
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.footer p {
+  font-weight: 600;
+  font-size: 5.6rem;
+  line-height: 120%;
+}
+
+.footer-project-text {
+  color: var(--white);
+}
+
+.footer-contact-text {
+  color: transparent;
+  -webkit-text-stroke: 2px var(--white);
+  cursor: pointer;
+  margin-top: -2%;
+}
+
+.footer-arrow {
+  display: inline-block;
+  transform: rotate(45deg);
+}
+
+.footer-follow-block {
+  border: 2px solid var(--white);
+  width: 100%;
+  height: 15rem;
+  display: flex;
+  margin-bottom: 1.5%;
+  align-items: center;
+}
+
+.footer-follow-block > div {
+  height: 102%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer-follow-ellipse1 {
+  border-top: 2px solid var(--white);
+  border-right: 2px solid var(--white);
+  border-bottom: 2px solid var(--white);
+  border-radius: 0px 500px 500px 0px;
+  flex-grow: 1;
+}
+
+.footer-follow-circle {
+  border: 2px solid var(--white);
+  aspect-ratio: 1/1;
+  border-radius: 500%;
+  backdrop-filter: blur(10px);
+}
+
+/* the whole circle is the link (bigger touch target, round focus ring) */
+.footer-follow-circle a,
+.footer-follow-circle .social-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+.footer-follow-circle a:focus-visible {
+  outline-offset: -0.6rem;
+}
+.footer-follow-circle img {
+  display: block;
+}
+
+.footer-follow-ellipse2 {
+  border-top: 2px solid var(--white);
+  border-left: 2px solid var(--white);
+  border-bottom: 2px solid var(--white);
+  border-radius: 500px 0px 0px 500px;
+  flex-grow: 1;
+}
+
+.footer-law {
+  font-size: 2rem;
+  font-weight: 300;
+  color: var(--white);
+  padding: 0rem 15rem 8rem 15rem;
+  font-family: var(--jost);
+}
+
+/* =====================================================================
+   TABLET + MOBILE (< 1100px)
+   Normal page flow and native scrolling. Every slide is at least one small-viewport high and
+   grows with its content, so nothing is ever clipped. The content slides above are already
+   flow layouts; this block adapts the older desktop-first parts (header, hero, footer).
+   ===================================================================== */
+@media (max-width: 1099px) {
+  .slide {
+    height: auto;
+    min-height: 100vh;
+    min-height: 100svh;
+  }
+
+  .intro-wrapper .slide {
+    max-height: none;
+  }
+
+  /* header */
+  header {
+    padding: clamp(1.6rem, 3.5vw, 3rem);
+    align-items: center;
+  }
+  header nav ul {
+    gap: clamp(1.6rem, 5vw, 3.2rem);
+  }
+  .nav-link {
+    font-size: clamp(1.4rem, 2.2vw, 1.6rem);
+  }
+  .nav-mark {
+    font-size: clamp(1.7rem, 2.4vw, 2rem);
+  }
+
+  /* hero: content stacks with the same generous, left-aligned rhythm as desktop */
+  .hero {
+    padding-left: clamp(1.6rem, 4vw, 4rem);
+    padding-right: clamp(1.6rem, 4vw, 4rem);
+    padding-top: clamp(9rem, 14vw, 13rem);
+    padding-bottom: clamp(2.4rem, 5vw, 4rem);
+  }
+  .hero-content {
+    width: 100%;
+  }
+  .hero-name-line {
+    font-size: clamp(3.2rem, 8vw, 4.6rem);
+  }
+  .hero-role-line {
+    font-size: clamp(1.7rem, 3.4vw, 2.1rem);
+  }
+  .hero-statement {
+    width: min(100%, 56rem);
+  }
+  .hero-statement p {
+    font-size: clamp(1.6rem, 2.6vw, 1.9rem);
+  }
+
+  /* footer */
+  .footer {
+    height: auto;
+    min-height: 100vh;
+    min-height: 100svh;
+    align-items: stretch;
+    padding: clamp(9rem, 12vw, 12rem) 0.8rem 0.8rem;
+  }
+  .footer-text-block {
+    height: auto;
+    flex: 1;
+    border-radius: clamp(2.4rem, 4vw, 4rem);
+    gap: clamp(2.4rem, 5vw, 5rem);
+  }
+  .footer-text-block > div:first-child {
+    padding: clamp(3rem, 8vw, 8rem) clamp(2rem, 8vw, 15rem) 0;
+  }
+  .footer p {
+    font-size: clamp(3rem, 7vw, 5.6rem);
+  }
+  .footer .footer-contact-text {
+    font-size: clamp(2.6rem, 5.6vw, 4.8rem);
+  }
+  .footer-follow-block {
+    height: clamp(7rem, 14vw, 15rem);
+    margin-bottom: 0;
+  }
+  .footer-law {
+    padding: 0 clamp(2rem, 8vw, 15rem) clamp(3rem, 6vw, 8rem);
+    font-size: clamp(1.4rem, 2.4vw, 2rem);
+  }
+}
+
+/* MOBILE (< 700px) */
+@media (max-width: 699px) {
+  .process-steps li {
+    padding: 1.6rem 0 0;
+  }
+  .process-name {
+    font-size: 2.2rem;
+  }
+  .service h3 {
+    font-size: 2.2rem;
+  }
+}
+
+/* Gradient backgrounds, lighter variants by screen.
+   - below 1100px the intro is taller than it is wide: a smaller copy of the same full image
+   - portrait phones (<= 430px) only ever show the left part of the image (the box is tall and narrow), so they get a
+     left crop that renders identically. Landscape phones and small tablets keep the full image: their box can be wider. */
+@media (max-width: 1099px) {
+  .intro-wrapper {
+    background-image: image-set(url("/src/assets/images/gradient-intro-medium-1400.webp") 1x, url("/src/assets/images/gradient-intro-desktop-2136.webp") 2x);
+  }
+}
+
+@media (max-width: 430px) and (orientation: portrait) {
+  .intro-wrapper {
+    background-image: image-set(url("/src/assets/images/gradient-intro-phone-693.webp") 1x, url("/src/assets/images/gradient-intro-phone-1050.webp") 2x);
+  }
+  .footer-text-block {
+    background-image: image-set(url("/src/assets/images/gradient-footer-phone-770.webp") 1x, url("/src/assets/images/gradient-footer-phone-1400.webp") 2x);
+  }
+}

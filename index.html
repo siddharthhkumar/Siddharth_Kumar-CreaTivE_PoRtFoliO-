@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Siddharth Kumar | Content Writer &amp; Social Media Executive</title>
+  <meta name="description" content="Portfolio of Siddharth Kumar: Content Writer, Social Media Executive, and Digital Growth Strategist with 4.5M+ organic impressions." />
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body { font-family: "Inter", "Segoe UI", system-ui, sans-serif; }
+
+    #home {
+      position: fixed; inset: 0; overflow: hidden;
+      background: #9ccb6a;            /* grass-green until the poster paints */
+      cursor: pointer;
+    }
+    #v {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center;
+      display: block; pointer-events: none;
+      transform: scale(1.08);
+      will-change: transform;
+    }
+    .hint {
+      position: absolute; left: 50%; bottom: 8%;
+      z-index: 3; margin: 0;
+      display: inline-flex; align-items: center; gap: 10px; white-space: nowrap;
+      padding: 12px 24px;
+      color: #234f28; font-weight: 700; font-size: 14.5px; letter-spacing: .01em;
+      background: linear-gradient(180deg, rgba(255,255,255,.86), rgba(255,255,255,.68));
+      border: 1px solid rgba(255,255,255,.92); border-radius: 999px;
+      box-shadow: 0 14px 32px rgba(26,60,28,.28), inset 0 1px 0 rgba(255,255,255,.95);
+      -webkit-backdrop-filter: blur(12px) saturate(1.3);
+      backdrop-filter: blur(12px) saturate(1.3);
+      transform: translate(-50%, 0);
+      animation: hintFloat 2.8s ease-in-out infinite;
+      transition: opacity .25s ease, transform .25s ease;
+      cursor: pointer;
+      user-select: none;
+    }
+    .hint-ball {
+      width: 14px; height: 14px; border-radius: 50%; border: 1.5px solid #234f28;
+      background: linear-gradient(180deg, #e3350d 0 45%, #234f28 45% 55%, #fff 55% 100%);
+      display: inline-block;
+    }
+    #home.playing .hint {
+      opacity: 0; transform: translate(-50%, 10px);
+    }
+    @keyframes hintFloat {
+      0%, 100% { transform: translate(-50%, 0); }
+      50%      { transform: translate(-50%, -6px); }
+    }
+    @media (prefers-reduced-motion: reduce) { .hint, #v { animation: none; } }
+
+    /* Direct jump shortcut for accessibility / fast loading */
+    .skip-btn {
+      position: absolute; top: 18px; right: 18px; z-index: 10;
+      color: rgba(35, 79, 40, .9); text-decoration: none; font-size: 12.5px; font-weight: 600;
+      background: rgba(255,255,255,0.75); border: 1px solid rgba(255,255,255,0.85);
+      border-radius: 999px; padding: 6px 14px; backdrop-filter: blur(8px);
+      transition: background .15s, transform .15s;
+    }
+    .skip-btn:hover { background: #fff; transform: translateY(-1px); }
+
+    .night-toggle {
+      position: absolute; top: 18px; left: 18px; z-index: 10;
+      color: #234f28; font: 600 12.5px/1 "Inter", sans-serif;
+      background: rgba(255,255,255,.75); border: 1px solid rgba(255,255,255,.85);
+      border-radius: 999px; padding: 9px 14px; cursor: pointer;
+      backdrop-filter: blur(8px); transition: background .15s, transform .15s, color .15s;
+    }
+    .night-toggle:hover { background: #fff; transform: translateY(-1px); }
+    #home.night-mode { background: #060b21; }
+    #home.night-mode #v { filter: brightness(.46) saturate(.72) hue-rotate(12deg); }
+    #home.night-mode::after {
+      content: ""; display: block; position: absolute; inset: 0; z-index: 2; pointer-events: none;
+      background-image: radial-gradient(circle at 12% 20%, #fff 0 1px, transparent 1.8px), radial-gradient(circle at 33% 13%, #d5deff 0 1px, transparent 1.8px), radial-gradient(circle at 71% 24%, #fff 0 1.4px, transparent 2px), radial-gradient(circle at 87% 8%, #b8c8ff 0 1px, transparent 1.8px), radial-gradient(circle at 55% 34%, #fff 0 1px, transparent 1.8px);
+      opacity: .92;
+    }
+    #home.night-mode .hint { color: #eef3ff; background: rgba(13,19,56,.78); border-color: rgba(170,190,255,.4); box-shadow: 0 14px 32px rgba(0,0,0,.42); }
+    #home.night-mode .skip-btn, #home.night-mode .night-toggle { color: #edf2ff; background: rgba(15,22,59,.78); border-color: rgba(170,190,255,.35); }
+
+    /* portrait phones: cover-cropping clips the ball, so fit it and let the
+       grass background fill the rest instead */
+    @media (max-aspect-ratio: 5/8) {
+      #home { background: #9ccb6a center center / cover no-repeat url("grass.jpg"); }
+      #v {
+        inset: auto; left: 50%; top: 50%;
+        width: 175vw; height: auto;
+        object-fit: fill;
+        transform: translate(-50%, -50%) !important;
+        animation: none !important;
+        -webkit-mask: linear-gradient(to bottom, transparent 0, #000 15%, #000 85%, transparent 100%);
+                mask: linear-gradient(to bottom, transparent 0, #000 15%, #000 85%, transparent 100%);
+      }
+    }
+  </style>
+</head>
+<body>
+  <section id="home">
+    <button id="landingNightMode" class="night-toggle" type="button" aria-pressed="false">Night mode</button>
+    <a href="details.html" class="skip-btn" aria-label="Skip to portfolio profile">Enter directly ?</a>
+    <video id="v" muted playsinline preload="auto" poster="poster.png">
+      <source src="home.mp4" type="video/mp4" />
+    </video>
+    <p class="hint"><span class="hint-ball"></span> Tap to meet Siddharth</p>
+  </section>
+
+  <script>
+    (function () {
+      var NEXT = "details.html";
+      var home = document.getElementById("home");
+      var v = document.getElementById("v");
+      var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      var busy = false, done = false;
+      var nightToggle = document.getElementById("landingNightMode");
+      var nightKey = "portfolio-night-mode";
+      function setNightMode(on) {
+        home.classList.toggle("night-mode", on);
+        if (nightToggle) {
+          nightToggle.setAttribute("aria-pressed", String(on));
+          nightToggle.textContent = on ? "Day mode" : "Night mode";
+        }
+        try { localStorage.setItem(nightKey, on ? "on" : "off"); } catch (err) {}
+      }
+      var savedNight = null;
+      try { savedNight = localStorage.getItem(nightKey); } catch (err) {}
+      setNightMode(savedNight === "on" || (savedNight === null && window.matchMedia("(prefers-color-scheme: dark)").matches));
+      if (nightToggle) nightToggle.addEventListener("click", function (event) {
+        event.stopPropagation();
+        setNightMode(!home.classList.contains("night-mode"));
+      });
+
+      // gentle idle bob + cursor-reactive lean, composed into one transform
+      var tx = 0, ty = 0, cx = 0, cy = 0, raf = 0, t0 = 0;
+      function onMove(e) {
+        var r = home.getBoundingClientRect();
+        tx = (e.clientX - r.left - r.width / 2) / (r.width / 2);   // -1..1
+        ty = (e.clientY - r.top - r.height / 2) / (r.height / 2);  // -1..1
+      }
+      function recentre() { tx = 0; ty = 0; }
+      function loop(now) {
+        if (!t0) t0 = now;
+        var bob = Math.sin((now - t0) / 3400 * 6.2832) * 1.1;      // gentle idle +/-1.1%, ~3.4s
+        cx += (tx - cx) * 0.09;                                    // smoothly follow the cursor
+        cy += (ty - cy) * 0.09;
+        var X = (cx * 2.2).toFixed(2);
+        var Y = (bob + cy * 1.6).toFixed(2);
+        var rot = (cx * 1.8).toFixed(2);
+        v.style.transform = "scale(1.08) translate(" + X + "%," + Y + "%) rotate(" + rot + "deg)";
+        raf = requestAnimationFrame(loop);
+      }
+      if (!reduce && window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+        home.addEventListener("mousemove", onMove);
+        home.addEventListener("mouseleave", recentre);
+        raf = requestAnimationFrame(loop);
+      }
+
+      function go() { if (done) return; done = true; window.location.href = NEXT; }
+      v.addEventListener("ended", go);
+
+      home.addEventListener("click", function (e) {
+        if (e.target && e.target.classList.contains("skip-btn")) return;
+        if (busy) return;
+        busy = true;
+        if (raf) cancelAnimationFrame(raf);          // freeze the ball where it is
+        home.removeEventListener("mousemove", onMove);
+        home.classList.add("playing");
+        if (reduce) { go(); return; }
+        var p = v.play();
+        if (p && p.catch) p.catch(go);
+        setTimeout(go, 900);                         // safety net (video is ~0.6s)
+      });
+    })();
+  </script>
+</body>
+</html>
