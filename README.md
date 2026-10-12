@@ -54,7 +54,7 @@ npm run build
 - `details.html` — portfolio, work history, and resume
 - `styles.css` — responsive visual styles, night mode, and animations
 - `script.js` — lightweight page interactions
-- `public/Siddharth_Kumar_C.V_.pdf` — downloadable resume
+- `public/Siddharth_Kumar_CV.pdf` — downloadable resume
 
 ## License
 
